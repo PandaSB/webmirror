@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Webapp key</title>
+    </head>
+    <body>
+
+        <p><input type="button" value="Refresh" id="keyrefresh" /></p>
+        <p><input type="button" value="LEFT" id="keyleft" /></p>
+        <p><input type="button" value="OK" id="keyok" /></p>
+        <p><input type="button" value="BACK" id="keyback" /></p>
+        <p><input type="button" value="RIGHT" id="keyright" /></p>
+        <p><input type="button" value="UP" id="keyup" /></p>
+        <p><input type="button" value="DOWN" id="keydown" /></p>
+        <p><input type="button" value="STANBY" id="keystandby" /></p>
+        <p><input type="button" value="REBOOT" id="keyreboot" /></p>
+
+        key <div id="key"><p>key</p></div>
+
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/jquery.js"></script>
+	<script>
+                var URL = window.location.protocol + "//" + window.location.host ;
+                var socket = io.connect(URL);
+                socket.on('message', function(message) {
+                        // alert('Le serveur a un message pour vous : ' + message);
+                });
+                socket.on('key', function(key) {
+                        $('#key').html(key);
+                });
+                $('#keyrefresh').click(function () { socket.emit('key', 'refresh');});
+                $('#keyup').click(function () { socket.emit('key', 'up');});
+                $('#keydown').click(function () { socket.emit('key', 'down');});
+                $('#keyleft').click(function () { socket.emit('key', 'left');});
+                $('#keyright').click(function () { socket.emit('key', 'right');});
+                $('#keyok').click(function () { socket.emit('key', 'ok');});
+                $('#keyback').click(function () { socket.emit('key', 'back');});
+		$('#keystandby').click(function () { socket.emit('key', 'standby');});
+                $('#keyreboot').click(function () { socket.emit('key', 'reboot');socket.emit('command','reboot');});
+
+	</script>
+    </body>
+</html>	

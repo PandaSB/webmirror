@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="black.css">
+        <meta charset="utf-8" />
+        <title>Webapp black page</title>
+    </head>
+    <body>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/jquery.js"></script>
+        <script>
+                var URL = window.location.protocol + "//" + window.location.host ;
+                var socket = io.connect(URL);
+                socket.on('message', function(message) {
+                        // alert('Le serveur a un message pour vous : ' + message);
+                });
+                socket.on('key', function(key) {
+			window.location.href = URL; 
+                });
+                        $('#key').html(key);
+        </script>
+    </body>
+</html>
+

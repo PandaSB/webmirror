@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" type="text/css" href="index.css">
+        <meta charset="utf-8" />
+        <title>Webapp</title>
+    </head>
+ 
+    <body>
+        <center><h1>Page principal</h1></center>
+        url <div id="url"><p>url</p></div>
+        date <div id="date"><p>date</p></div>
+	key <div id="key"><p>key</p></div>
+
+
+        <p><input type="button" value="Key1 " id="key1" /></p>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/jquery.js"></script>
+        <script>
+                var URL = window.location.protocol + "//" + window.location.host ;  
+		var socket = io.connect(URL);
+		var d = new Date();
+		socket.on('message', function(message) {
+        		// alert('Le serveur a un message pour vous : ' + message);
+		});
+                socket.on('key', function(key) {
+			switch (key) {
+				case "refresh":
+					location.reload();
+				break;
+				case "standby":
+					window.location.href = URL + "//black.html";
+				break;
+				default : 
+			}
+                	$('#key').html(key);
+                });
+
+		$('#date').html(d.toLocaleTimeString());
+		$('#url').html(URL);
+		$('#key1').click(function () {
+      			socket.emit('key', 'key1');
+		});
+</script>
+    </body>
+</html>
