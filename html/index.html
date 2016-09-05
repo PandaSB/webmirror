@@ -7,16 +7,77 @@
     </head>
  
     <body>
+    <div id="main">
         <center><h1>Page principal</h1></center>
-        url <div id="url"><p>url</p></div>
-        date <div id="date"><p>date</p></div>
-	key <div id="key"><p>key</p></div>
+	<section>
 
-
-        <p><input type="button" value="Key1 " id="key1" /></p>
+	</section>
+	<footer>
+	<table style="width:100%">
+	<tr>
+        <td><div id="url">url</div></td>
+        <td><div id="date">date</div></td>
+	<td><div id="key">key</div></td>
+	</tr>
+	<tr>
+	<td><div id="msg">msg</div></td>
+	</tr>
+	</table>
+	</footer>
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="/jquery.js"></script>
+
+	<script>
+
+		function httpGet(theUrl)
+		{
+   			var xmlHttp = new XMLHttpRequest();
+   			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+   			xmlHttp.send( null );
+   			return xmlHttp.responseText;
+		}
+
+                var div = document.createElement("div");
+                div.style.position = "absolute";
+                div.style.left ="20px";
+                div.style.top = "100px";
+                div.style.width = "200px";
+                div.style.height = "100px";
+                div.style.background = "lightblue";
+                div.style.color = "white";
+		resp = httpGet ("http://temp.home/tempC");
+    		data = resp.split(":");
+                div.innerHTML = "Temperature :<br><br><center><h1> "+ data[1] + "<h1><center>";
+		document.body.appendChild(div);
+
+                var div2 = document.createElement("div2");
+                div2.style.position = "absolute";
+                div2.style.left ="250px";
+                div2.style.top = "100px";
+                div2.style.width = "200px";
+                div2.style.height = "100px";
+                div2.style.background = "lightblue";
+                div2.style.color = "white";
+		resp = httpGet ("http://temp.home/humidity");
+                data = resp.split(":");
+                div2.innerHTML = "Humidité :<br><br><center><h1> "+ data[1] + "<h1><center>";
+                document.body.appendChild(div2);
+        </script>
+
+        <script>
+                var div3 = document.createElement("div3");
+                div3.style.position = "absolute";
+                div3.style.left ="20px";
+                div3.style.top = "230px";
+                div3.style.width = "200px";
+                div3.style.height = "100px";
+                div3.style.background = "lightblue";
+                div3.style.color = "white";
+       		div3.innerHTML="test";
+                document.body.appendChild(div3);
+        </script>
+
         <script>
                 var URL = window.location.protocol + "//" + window.location.host ;  
 		var socket = io.connect(URL);
@@ -42,6 +103,7 @@
 		$('#key1').click(function () {
       			socket.emit('key', 'key1');
 		});
-</script>
+	</script>
+    </div>
     </body>
 </html>

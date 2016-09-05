@@ -51,6 +51,7 @@ app.get('/', function(req, res,next) {
 	res.sendFile(__dirname + '/index.html');
 });
 
+
 server.listen(3000, function() {
 	console.log("Listening on 3000");
 });  
